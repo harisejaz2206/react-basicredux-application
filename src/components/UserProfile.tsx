@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeUserName, resetProfile } from '../actions/userAction';
+import { MdSave, MdCancel, MdModeEdit, MdDeleteForever } from 'react-icons/md';
 
 const UserProfile: React.FC = () => {
     const dispatch = useDispatch();
@@ -23,19 +24,49 @@ const UserProfile: React.FC = () => {
     };
 
     return (
-        <div>
-            <h1>User Profile</h1>
-            <p>Name: {userName}</p>
+        <div className="bg-gray-100 p-8 rounded-xl max-w-xl mx-auto mt-10 shadow-lg">
+            <h1 className="text-2xl font-semibold mb-4">User Profile</h1>
+            <p className="text-lg mb-4">Name: {userName}</p>
             {editing ? (
-                <form onSubmit={handleSubmit}>
-                    <input type="text" value={newName} onChange={handleNameChange} />
-                    <button type="submit">Save</button>
-                    <button type="button" onClick={() => setEditing(false)}>Cancel</button>
+                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                    <input
+                        type="text"
+                        value={newName}
+                        onChange={handleNameChange}
+                        className="p-2 border rounded-md"
+                    />
+                    <div className="flex gap-2">
+                        <button
+                            type="submit"
+                            className="bg-blue-500 text-white py-1 px-2 rounded-md hover:bg-blue-600 flex items-center gap-2"
+                        >
+                            <MdSave /> Save
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => setEditing(false)}
+                            className="bg-gray-300 py-1 px-2 rounded-md hover:bg-gray-400 flex items-center gap-2"
+                        >
+                            <MdCancel /> Cancel
+                        </button>
+                    </div>
                 </form>
             ) : (
-                <button onClick={() => setEditing(true)}>Change Name</button>
+                <div className="flex gap-2">
+                    <button
+                        onClick={() => setEditing(true)}
+                        className="bg-green-500 text-white py-1 px-2 rounded-md hover:bg-green-600 flex items-center gap-2"
+                    >
+                        <MdModeEdit /> Change Name
+                    </button>
+                    <button
+                        onClick={handleResetProfile}
+                        className="bg-red-500 text-white py-1 px-2 rounded-md hover:bg-red-600 flex items-center gap-2"
+                    >
+                        <MdDeleteForever /> Reset Profile
+                    </button>
+                </div>
             )}
-            <button onClick={handleResetProfile}>Reset Profile</button>
         </div>
     );
 };
